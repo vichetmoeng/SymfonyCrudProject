@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,9 +21,20 @@ class CrudController extends AbstractController
     /**
      * @Route("/create", name="create_task", methods={"POST"})
      */
-    public function create()
+    public function create(Request $request)
     {
-        exit('to do somthing ');
+        $title = trim($request->request->get('title'));
+        if(empty($title)) return $this->redirectToRoute('crud');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $task = new Task();
+        $task->setTitle($title);
+
+        $em->persist($task);
+        $em->flush();
+
+        return $this->redirectToRoute('crud');
     }
 
     /**
