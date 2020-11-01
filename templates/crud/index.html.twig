@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony Crud Project{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        margin: 0;
+        min-width: 250px;
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: #2c7c0d;
+    }
+
+    ul li {
+        cursor: pointer;
+        position: relative;
+        padding: 12px 8px 12px 40px;
+        list-style-type: none;
+        background: #ffffff;
+        font-size: 18px;
+        transition: 0.2s;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    ul li:hover {
+        background: #0e915f;
+    }
+
+    ul li:hover a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+    ul li.checked {
+        background: #0e915f;
+        color: #fff;
+        text-decoration: line-through;
+    }
+    ul li.checked::before {
+        content: "";
+        position: absolute;
+        border-color: #ffb00d;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        top: 10px;
+        left: 16px;
+        transform: rotate(45deg);
+        height: 15px;
+        width: 7px;
+    }
+
+    ul li.checked a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    .close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 12px 16px 12px 16px;
+    }
+
+    .close:hover {
+        background-color: #ff2002;
+        color: white;
+    }
+
+    .header {
+        background-color: #0e915f;
+        padding: 30px 40px;
+        color: white;
+        text-align: center;
+    }
+
+    .header:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+
+    input {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        width: 75%;
+        padding: 10px;
+        float: left;
+        font-size: 16px;
+    }
+
+    .addBtn {
+        padding: 8px;
+        width: 25%;
+        background-color: green;
+        color: white;
+        float: left;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        border-radius: 0;
+        font-weight: bold;
+    }
+
+    .addBtn:hover {
+        background-color: blue;
+    }
+
+    .task-list-item {
+        display: block;
+    }
+
+
+</style>
+
+
+    <div class="header">
+        <h2>Symfony Crud Project</h2>
+        <form action="">
+            <input type="text" id="myInput" placeholder="Task title..." />
+            <button type="submit" class="addBtn">Add a task</button>
+        </form>
+    </div>
+
+    <ul>
+        <li>
+            <a href="done"> <span class="task-list-item">Do shopping </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+        <li class="checked">
+            <a href="undone"> <span class="task-list-item">Buy eggs </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+        <li>
+            <a href="done"> <span class="task-list-item">Meet John </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+        <li>
+            <a href="done"> <span class="task-list-item">Read a book </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+        <li>
+            <a href="done"> <span class="task-list-item">Learn Doctrine ORM </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+        <li>
+            <a href="done"> <span class="task-list-item">Prepare a meal </span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="delete"><span class="close">X</span></a>
+        </li>
+    </ul>
+
+{% endblock %}
