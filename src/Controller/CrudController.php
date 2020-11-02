@@ -62,8 +62,13 @@ class CrudController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete_task")
      */
-    public function delete($id)
+    public function delete(Task $id)
     {
-        exit('Todo somethign '. $id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($id);
+
+        $em->flush();
+
+        return $this->redirectToRoute('crud');
     }
 }
