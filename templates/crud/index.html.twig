@@ -1,133 +1,126 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Symfony Crud Project{% endblock
+%} {% block body %}
+    <style>
+        body {
+            margin: 0;
+            min-width: 250px;
+        }
+        * {
+            box-sizing: border-box;
+        }
 
-{% block title %}Symfony Crud Project{% endblock %}
+        ul {
+            margin: 0;
+            padding: 0;
+        }
 
-{% block body %}
-<style>
-    body {
-        margin: 0;
-        min-width: 250px;
-    }
-    * {
-        box-sizing: border-box;
-    }
+        a {
+            text-decoration: none;
+            color: #2c7c0d;
+        }
 
-    ul {
-        margin: 0;
-        padding: 0;
-    }
+        ul li {
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            list-style-type: none;
+            background: #ffffff;
+            font-size: 18px;
+            transition: 0.2s;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-    a {
-        text-decoration: none;
-        color: #2c7c0d;
-    }
+        ul li:hover {
+            background: #0e915f;
+        }
 
-    ul li {
-        cursor: pointer;
-        position: relative;
-        padding: 12px 8px 12px 40px;
-        list-style-type: none;
-        background: #ffffff;
-        font-size: 18px;
-        transition: 0.2s;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+        ul li:hover a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        ul li.checked {
+            background: #0e915f;
+            color: #fff;
+            text-decoration: line-through;
+        }
+        ul li.checked::before {
+            content: "";
+            position: absolute;
+            border-color: #ffb00d;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            top: 10px;
+            left: 16px;
+            transform: rotate(45deg);
+            height: 15px;
+            width: 7px;
+        }
 
-    ul li:hover {
-        background: #0e915f;
-    }
+        ul li.checked a {
+            text-decoration: none;
+            color: #ffffff;
+        }
 
-    ul li:hover a {
-        text-decoration: none;
-        color: #ffffff;
-    }
-    ul li.checked {
-        background: #0e915f;
-        color: #fff;
-        text-decoration: line-through;
-    }
-    ul li.checked::before {
-        content: "";
-        position: absolute;
-        border-color: #ffb00d;
-        border-style: solid;
-        border-width: 0 2px 2px 0;
-        top: 10px;
-        left: 16px;
-        transform: rotate(45deg);
-        height: 15px;
-        width: 7px;
-    }
+        .close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 12px 16px 12px 16px;
+        }
 
-    ul li.checked a {
-        text-decoration: none;
-        color: #ffffff;
-    }
+        .close:hover {
+            background-color: #ff2002;
+            color: white;
+        }
 
-    .close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        padding: 12px 16px 12px 16px;
-    }
+        .header {
+            background-color: #0e915f;
+            padding: 30px 40px;
+            color: white;
+            text-align: center;
+        }
 
-    .close:hover {
-        background-color: #ff2002;
-        color: white;
-    }
+        .header:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
 
-    .header {
-        background-color: #0e915f;
-        padding: 30px 40px;
-        color: white;
-        text-align: center;
-    }
+        input {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            width: 75%;
+            padding: 10px;
+            float: left;
+            font-size: 16px;
+        }
 
-    .header:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+        .addBtn {
+            padding: 8px;
+            width: 25%;
+            background-color: green;
+            color: white;
+            float: left;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 0;
+            font-weight: bold;
+        }
 
+        .addBtn:hover {
+            background-color: blue;
+        }
 
-    input {
-        margin: 0;
-        border: none;
-        border-radius: 0;
-        width: 75%;
-        padding: 10px;
-        float: left;
-        font-size: 16px;
-    }
-
-    .addBtn {
-        padding: 8px;
-        width: 25%;
-        background-color: green;
-        color: white;
-        float: left;
-        text-align: center;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        border-radius: 0;
-        font-weight: bold;
-    }
-
-    .addBtn:hover {
-        background-color: blue;
-    }
-
-    .task-list-item {
-        display: block;
-    }
-
-
-</style>
-
+        .task-list-item {
+            display: block;
+        }
+    </style>
 
     <div class="header">
         <h2>Symfony Crud Project</h2>
@@ -139,12 +132,16 @@
 
     <ul>
         {% for tasks in task %}
-        <li {% if tasks.status %} class="checked" {% endif %}>
-            <a href="{{ path('switch_status', {'id':tasks.id}) }}"> <span class="task-list-item">{{ tasks.title }}</span> </a
-            ><a onclick="return confirm('Are you sure to delete?')" href="{{ path('delete_task', {'id':tasks.id}) }}"><span class="close">X</span></a>
-        </li>
+            <li {% if tasks.status %} class="checked" {% endif %}>
+                <a href="{{ path('switch_status', {'id':tasks.id}) }}">
+                    <span class="task-list-item">{{ tasks.title }}</span> </a
+                ><a
+                        onclick="return confirm('Are you sure to delete?')"
+                        href="{{ path('delete_task', {'id':tasks.id}) }}"
+                ><span class="close">X</span></a
+                >
+            </li>
         {% endfor %}
-
     </ul>
 
 {% endblock %}

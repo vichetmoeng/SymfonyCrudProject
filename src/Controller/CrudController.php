@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Task;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,11 +17,11 @@ class CrudController extends AbstractController
     {
         $task = $this->getDoctrine()->getRepository(Task::class)->findBy(
             [],
-            ['id' =>'DESC']
+            ['id' => 'DESC']
         );
 
         return $this->render('crud/index.html.twig', [
-            'task' => $task
+            'task' => $task,
         ]);
     }
 
@@ -31,16 +31,15 @@ class CrudController extends AbstractController
     public function create(Request $request)
     {
         $title = trim($request->request->get('title'));
-        if(empty($title)) return $this->redirectToRoute('crud');
+        if (empty($title)) {
+            return $this->redirectToRoute('crud');
+        }
 
         $em = $this->getDoctrine()->getManager();
-
         $task = new Task();
         $task->setTitle($title);
-
         $em->persist($task);
         $em->flush();
-
         return $this->redirectToRoute('crud');
     }
 
@@ -51,11 +50,8 @@ class CrudController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $task = $em->getRepository(Task::class)->find($id);
-
         $task->setStatus(!$task->getStatus());
-
         $em->flush();
-
         return $this->redirectToRoute('crud');
     }
 
@@ -66,9 +62,7 @@ class CrudController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($id);
-
         $em->flush();
-
         return $this->redirectToRoute('crud');
     }
 }
