@@ -138,10 +138,12 @@
     </div>
 
     <ul>
-        <li>
-            <a href="{{ path('switch_status', {'id':1}) }}"> <span class="task-list-item">Do shopping </span> </a
-            ><a onclick="return confirm('Are you sure to delete?')" href="{{ path('delete_task', {'id':2}) }}"><span class="close">X</span></a>
+        {% for tasks in task %}
+        <li {% if tasks.status %} class="checked" {% endif %}>
+            <a href="{{ path('switch_status', {'id':tasks.id}) }}"> <span class="task-list-item">{{ tasks.title }}</span> </a
+            ><a onclick="return confirm('Are you sure to delete?')" href="{{ path('delete_task', {'id':tasks.id}) }}"><span class="close">X</span></a>
         </li>
+        {% endfor %}
 
     </ul>
 

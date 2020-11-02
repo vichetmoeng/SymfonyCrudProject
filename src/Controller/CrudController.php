@@ -15,7 +15,14 @@ class CrudController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('crud/index.html.twig');
+        $task = $this->getDoctrine()->getRepository(Task::class)->findBy(
+            [],
+            ['id' =>'DESC']
+        );
+
+        return $this->render('crud/index.html.twig', [
+            'task' => $task
+        ]);
     }
 
     /**
