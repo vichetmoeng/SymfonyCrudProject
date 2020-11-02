@@ -49,7 +49,14 @@ class CrudController extends AbstractController
      */
     public function switchStatus($id)
     {
-        exit('Todo somethign '. $id);
+        $em = $this->getDoctrine()->getManager();
+        $task = $em->getRepository(Task::class)->find($id);
+
+        $task->setStatus(!$task->getStatus());
+
+        $em->flush();
+
+        return $this->redirectToRoute('crud');
     }
 
     /**
